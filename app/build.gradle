@@ -1,0 +1,47 @@
+
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "sceneform"
+
+        // 24 is the minimum since ARCore only works with 24 and higher.
+        minSdkVersion 24
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        ndk {
+
+            abiFilters 'arm64-v8a', 'x86'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    implementation "com.google.ar.sceneform:core:1.4.0"
+    implementation "com.google.ar.sceneform.ux:sceneform-ux:1.4.0"
+    implementation "com.android.support:appcompat-v7:27.1.1"
+}
+
+apply plugin: 'com.google.ar.sceneform.plugin'
+
+sceneform.asset('sampledata/models/pdmodel.obj',
+        'default',
+        'sampledata/models/pdmodel.sfa',
+        'src/main/res/raw/pdmodel')
+
